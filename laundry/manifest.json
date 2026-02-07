@@ -1,0 +1,21 @@
+{
+  "name": "FC Oppenwehe Trikotwäsche",
+  "short_name": "Trikotwäsche",
+  "description": "Trikotwäsche-Verwaltung für FC Oppenwehe",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#b32d06",
+  "icons": [
+    {
+      "src": "https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif",
+      "sizes": "192x192",
+      "type": "image/gif"
+    },
+    {
+      "src": "https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif",
+      "sizes": "512x512",
+      "type": "image/gif"
+    }
+  ]
+}

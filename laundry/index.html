@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trikotwäsche</title>
+    
+    <!-- PWA und App-Icons -->
+    <link rel="apple-touch-icon" href="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif">
+    <link rel="icon" type="image/gif" href="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#b32d06">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Trikotwäsche">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,7 +35,9 @@
             <thead>
                 <tr>
                     <th>Spieler</th>
-                    <th>Datum</th>
+                    <th class="sortable-header" onclick="toggleWashSort()">
+                        Wäschen <span id="washSortIndicator"></span>
+                    </th>
                 </tr>
             </thead>
             <tbody id="playerTableBody">

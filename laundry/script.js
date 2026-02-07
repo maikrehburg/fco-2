@@ -3,11 +3,13 @@ let players = [];
 let currentPlayerId = null;
 let githubToken = localStorage.getItem('githubToken') || '';
 let fileSHA = null; // Wird benötigt für Updates
+let washSortMode = localStorage.getItem('washSortMode') || 'none'; // 'asc', 'desc', 'none'
 
 // Laden der Daten beim Start
 document.addEventListener('DOMContentLoaded', function() {
     updateSettingsButton();
     loadData();
+    updateWashSortIndicator();
     
     // Event Listener für das Formular
     document.getElementById('washForm').addEventListener('submit', function(e) {
@@ -72,7 +74,10 @@ async function loadData() {
         if (response.ok) {
             const data = await response.json();
             fileSHA = data.sha;
-            const content = atob(data.content);
+            // UTF-8 korrekt dekodieren von atob()
+            const binaryString = atob(data.content);
+            const bytes = Uint8Array.from(binaryString, char => char.charCodeAt(0));
+            const content = new TextDecoder().decode(bytes);
             players = JSON.parse(content);
         } else if (response.status === 404) {
             // Datei existiert noch nicht - verwende Beispieldaten
@@ -123,7 +128,12 @@ async function saveData() {
     }
     
     try {
-        const content = btoa(JSON.stringify(players, null, 2));
+        // UTF-8 korrekt enkodieren für btoa()
+        const jsonString = JSON.stringify(players, null, 2);
+        const utf8Bytes = new TextEncoder().encode(jsonString);
+        const binaryString = Array.from(utf8Bytes, byte => String.fromCharCode(byte)).join('');
+        const content = btoa(binaryString);
+        
         const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}`;
         
         const body = {
@@ -161,6 +171,57 @@ async function saveData() {
     }
 }
 
+// Sortierung nach Wäschen umschalten
+function toggleWashSort() {
+    // Toggle zwischen asc und desc
+    washSortMode = washSortMode === 'asc' ? 'desc' : 'asc';
+    
+    localStorage.setItem('washSortMode', washSortMode);
+    updateWashSortIndicator();
+    renderTable();
+}
+
+// Sortier-Indikator für Wäschen aktualisieren
+function updateWashSortIndicator() {
+    const washIndicator = document.getElementById('washSortIndicator');
+    
+    if (washIndicator) {
+        if (washSortMode === 'asc') {
+            washIndicator.textContent = '↑';
+            washIndicator.title = 'Aufsteigend';
+        } else if (washSortMode === 'desc') {
+            washIndicator.textContent = '↓';
+            washIndicator.title = 'Absteigend';
+        } else {
+            washIndicator.textContent = '';
+            washIndicator.title = '';
+        }
+    }
+}
+
+// Spieler sortieren basierend auf aktuellem Modus
+function getSortedPlayers() {
+    const sortedPlayers = [...players];
+    
+    if (washSortMode !== 'none') {
+        // Sortiere nach Wäschen-Anzahl
+        sortedPlayers.sort((a, b) => {
+            const countA = a.washDates ? a.washDates.length : 0;
+            const countB = b.washDates ? b.washDates.length : 0;
+            if (washSortMode === 'asc') {
+                return countA - countB;
+            } else {
+                return countB - countA;
+            }
+        });
+    } else {
+        // Standard: alphabetisch nach Namen
+        sortedPlayers.sort((a, b) => a.name.localeCompare(b.name, 'de'));
+    }
+    
+    return sortedPlayers;
+}
+
 // Tabelle rendern
 function renderTable() {
     const tbody = document.getElementById('playerTableBody');
@@ -172,7 +233,9 @@ function renderTable() {
     
     tbody.innerHTML = '';
     
-    players.forEach(player => {
+    const sortedPlayers = getSortedPlayers();
+    
+    sortedPlayers.forEach(player => {
         const row = document.createElement('tr');
         
         // Spieler-Name Spalte
