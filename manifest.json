@@ -1,7 +1,7 @@
 {
-  "name": "FC Oppenwehe Trikotwäsche",
-  "short_name": "Trikotwäsche",
-  "description": "Trikotwäsche-Verwaltung für FC Oppenwehe",
+  "name": "FC Oppenwehe II - Team-App",
+  "short_name": "FCO II",
+  "description": "Team-Management für FC Oppenwehe II",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",

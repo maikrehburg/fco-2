@@ -8,18 +8,18 @@
     <!-- PWA und App-Icons -->
     <link rel="apple-touch-icon" href="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif">
     <link rel="icon" type="image/gif" href="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif">
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="../manifest.json">
     <meta name="theme-color" content="#b32d06">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Trikotwäsche">
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="laundry.css">
 </head>
 <body>
     <div class="container">
-        <a href="../" class="logo-link" title="Zurück zur Startseite">
-            <img src="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif" alt="FC Oppenwehe Logo" class="logo">
+        <a href="../index.html" class="logo-link" title="Zurück zur Startseite">
+            <img src="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif" alt="FC Oppenwehe Logo" class="fco-logo">
         </a>
         <button id="settingsBtn" class="settings-btn" onclick="resetGitHubToken()" title="GitHub Token zurücksetzen" style="display: none;">⚙️</button>
         <div class="header">
@@ -61,14 +61,14 @@
                     <input type="text" id="opponent" placeholder="z.B. TUS Oppendorf" required>
                 </div>
                 <div class="form-buttons">
-                    <button type="submit">Speichern</button>
-                    <button type="button" onclick="closeOverlay()">Abbrechen</button>
+                    <button type="submit" class="btn btn-primary">Speichern</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeOverlay()">Abbrechen</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script src="config.js"></script>
+    <script src="../config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
