@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "André Rose",
+    "washDates": []
+  },
+  {
+    "id": 2,
+    "name": "Artem Ladner",
+    "washDates": []
+  },
+  {
+    "id": 3,
+    "name": "Bio Gas",
+    "washDates": []
+  },
+  {
+    "id": 4,
+    "name": "Carsten Bierenriede",
+    "washDates": []
+  },
+  {
+    "id": 5,
+    "name": "Christian Henke",
+    "washDates": []
+  },
+  {
+    "id": 6,
+    "name": "Christian Wüppenhorst",
+    "washDates": []
+  },
+  {
+    "id": 7,
+    "name": "Christoph Meyer",
+    "washDates": []
+  },
+  {
+    "id": 8,
+    "name": "Daniel Büttemeier",
+    "washDates": []
+  },
+  {
+    "id": 9,
+    "name": "Eduard Schander",
+    "washDates": []
+  },
+  {
+    "id": 10,
+    "name": "Enes",
+    "washDates": []
+  },
+  {
+    "id": 11,
+    "name": "Eric Bierenriede",
+    "washDates": []
+  },
+  {
+    "id": 12,
+    "name": "Fabian Vahrenkamp",
+    "washDates": []
+  }
+]

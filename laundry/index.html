@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trikotwäsche</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="../" class="logo-link" title="Zurück zur Startseite">
+            <img src="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif" alt="FC Oppenwehe Logo" class="logo">
+        </a>
+        <button id="settingsBtn" class="settings-btn" onclick="resetGitHubToken()" title="GitHub Token zurücksetzen" style="display: none;">⚙️</button>
+        <div class="header">
+            <h1>Trikotwäsche</h1>
+        </div>
+        
+        <div class="add-player-section">
+            <input type="text" id="newPlayerName" placeholder="Neuer Spieler">
+            <button onclick="addPlayer()">Spieler hinzufügen</button>
+        </div>
+
+        <table id="playerTable">
+            <thead>
+                <tr>
+                    <th>Spieler</th>
+                    <th>Datum</th>
+                </tr>
+            </thead>
+            <tbody id="playerTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Overlay für neues Waschdatum -->
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <h2>Neues Waschdatum</h2>
+            <form id="washForm">
+                <div class="form-group">
+                    <label for="washDate">Datum:</label>
+                    <input type="date" id="washDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="opponent">Gegner / Anlass: <span style="color: red;">*</span></label>
+                    <input type="text" id="opponent" placeholder="z.B. TUS Oppendorf" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit">Speichern</button>
+                    <button type="button" onclick="closeOverlay()">Abbrechen</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
