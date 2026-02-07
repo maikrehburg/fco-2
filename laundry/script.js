@@ -106,7 +106,7 @@ async function loadData() {
 }
 
 // Daten in GitHub speichern
-async function saveData() {
+async function saveData(commitMessage = null) {
     // Token prüfen/anfordern nur wenn gespeichert werden soll
     if (!githubToken) {
         const token = prompt(
@@ -137,7 +137,7 @@ async function saveData() {
         const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}`;
         
         const body = {
-            message: `Update Trikotwäscheliste - ${new Date().toLocaleString('de-DE')}`,
+            message: commitMessage || `Update Trikotwäscheliste - ${new Date().toLocaleString('de-DE')}`,
             content: content,
             branch: GITHUB_CONFIG.branch
         };
@@ -353,7 +353,8 @@ function saveWashDate() {
             opponent: opponent
         });
         
-        saveData();
+        const commitMessage = `Wäsche hinzugefügt: ${player.name} - ${formatDate(date)} (${opponent})`;
+        saveData(commitMessage);
         renderTable();
         closeOverlay();
     }
@@ -369,8 +370,9 @@ function deleteWashDate(playerId, washIndex) {
             const dateToDelete = sortedDates[washIndex];
             const originalIndex = player.washDates.indexOf(dateToDelete);
             
+            const commitMessage = `Wäsche gelöscht: ${player.name} - ${formatDate(dateToDelete.date)} (${dateToDelete.opponent})`;
             player.washDates.splice(originalIndex, 1);
-            saveData();
+            saveData(commitMessage);
             renderTable();
         }
     }
