@@ -14,17 +14,23 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Trikotwäsche">
     
+    <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="laundry.css">
 </head>
 <body>
-    <div class="container">
-        <a href="../index.html" class="logo-link" title="Zurück zur Startseite">
-            <img src="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif" alt="FC Oppenwehe Logo" class="fco-logo">
-        </a>
-        <button id="settingsBtn" class="settings-btn" onclick="resetGitHubToken()" title="GitHub Token zurücksetzen" style="display: none;">⚙️</button>
-        <div class="header">
+    <div class="header">
+        <div class="header-content">
+            <a href="../index.html" class="back-btn">
+                <span>←</span>
+                <span>Zurück</span>
+            </a>
+            <img src="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif" alt="FCO" class="logo-small">
             <h1>Trikotwäsche</h1>
+            <button id="settingsBtn" class="settings-btn" onclick="resetGitHubToken()" title="GitHub Token zurücksetzen" style="display: none;">⚙️</button>
         </div>
+    </div>
+
+    <div class="container">
         
         <div class="add-player-section">
             <input type="text" id="newPlayerName" placeholder="Neuer Spieler">

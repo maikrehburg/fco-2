@@ -25,18 +25,25 @@ Zentrale Navigation zu allen Team-Funktionen
 ```
 fco-2/
 ├── index.html              # Startseite
-├── style.css               # Styles für Startseite
+├── style.css               # Globale Styles (Header, Komponenten)
+├── home.css                # Styles für Startseite
 ├── manifest.json           # Globale PWA-Konfiguration
 ├── config.js               # Globale Konfiguration
 ├── match-plan/
-│   ├── index.html          # Spielplan-Seite
-│   └── style.css           # Spielplan-spezifische Styles
+│   ├── match-plan.html     # Spielplan-Seite
+│   └── match-plan.css      # Spielplan-spezifische Styles
 └── laundry/
-    ├── index.html          # Trikotwäsche-App
+    ├── laundry.html        # Trikotwäsche-App
     ├── laundry.css         # Trikotwäsche-spezifische Styles
     ├── script.js           # App-Logik
     └── data.json           # Spielerdaten
 ```
+
+**CSS-Architektur:**
+- `style.css` - Globale Komponenten (Header, Theme-Variablen)
+- `home.css` - Startseiten-spezifische Styles
+- `match-plan.css` - Spielplan-spezifische Styles
+- `laundry.css` - Trikotwäsche-spezifische Styles
 
 ## 🎨 Features
 

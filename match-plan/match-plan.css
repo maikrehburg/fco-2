@@ -2,67 +2,9 @@
    Spielplan Page Styles - FC Oppenwehe II
    ============================================ */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #f5f5f5;
     min-height: 100vh;
-}
-
-.header {
-    background: linear-gradient(135deg, #b32d06 0%, #8a2205 100%);
-    color: white;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.header-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    border-radius: 6px;
-    color: white;
-    text-decoration: none;
-    font-size: 1em;
-    cursor: pointer;
-    transition: all 0.3s;
-    min-height: 44px;
-}
-
-.back-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.back-btn:active {
-    transform: scale(0.98);
-}
-
-.logo-small {
-    width: 40px;
-    height: 40px;
-}
-
-h1 {
-    font-size: 1.8em;
 }
 
 .content {
