@@ -9,10 +9,17 @@ Eine modulare Web-App für das Team-Management der FC Oppenwehe II.
 ### 🏠 [Startseite](https://maikrehburg.github.io/fco-2/)
 Zentrale Navigation zu allen Team-Funktionen
 
-### 📅 [Spielplan](https://maikrehburg.github.io/fco-2/spielplan.html)
+### 📅 [Spielplan](https://maikrehburg.github.io/fco-2/match-plan/match-plan.html)
 - Anzeige aller Spiele der Saison 25/26
 - Integration von fussball.de
 - Termine und Ergebnisse
+
+### ⚽ [Trainingsplan](https://maikrehburg.github.io/fco-2/training/training.html)
+- Trainings mit Datumsauswahl hinzufügen
+- Teilnehmer aus Spielerliste auswählen
+- Übersicht aller Trainings mit Teilnehmerzahl
+- Nachträgliche Bearbeitung von Teilnehmern
+- GitHub-basierte Datenspeicherung
 
 ### 👕 [Trikotwäsche](https://maikrehburg.github.io/fco-2/laundry/)
 - Spielerverwaltung
@@ -32,6 +39,11 @@ fco-2/
 ├── match-plan/
 │   ├── match-plan.html     # Spielplan-Seite
 │   └── match-plan.css      # Spielplan-spezifische Styles
+├── training/
+│   ├── training.html       # Trainingsplan-Seite
+│   ├── training.css        # Trainingsplan-spezifische Styles
+│   ├── training.js         # Trainingsplan-Logik
+│   └── data.json           # Trainingsdaten
 └── laundry/
     ├── laundry.html        # Trikotwäsche-App
     ├── laundry.css         # Trikotwäsche-spezifische Styles
@@ -43,6 +55,7 @@ fco-2/
 - `style.css` - Globale Komponenten (Header, Theme-Variablen)
 - `home.css` - Startseiten-spezifische Styles
 - `match-plan.css` - Spielplan-spezifische Styles
+- `training.css` - Trainingsplan-spezifische Styles
 - `laundry.css` - Trikotwäsche-spezifische Styles
 
 ## 🎨 Features
