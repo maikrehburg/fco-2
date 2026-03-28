@@ -1,16 +1,16 @@
 // Datenstruktur
+let appData = { players: [], trainings: [] };
 let players = [];
 let trainings = [];
 let currentTrainingId = null;
 let selectedPlayers = new Set();
 let githubToken = localStorage.getItem('githubToken') || '';
-let trainingFileSHA = null;
-let playerFileSHA = null;
+let fileSHA = null;
 
 // Laden der Daten beim Start
 document.addEventListener('DOMContentLoaded', function() {
     updateSettingsButton();
-    loadAllData();
+    loadData();
     
     // Event Listener für das Formular
     document.getElementById('trainingForm').addEventListener('submit', function(e) {
@@ -40,19 +40,10 @@ function resetGitHubToken() {
     location.reload();
 }
 
-// Alle Daten laden
-async function loadAllData() {
-    await Promise.all([
-        loadPlayers(),
-        loadTrainings()
-    ]);
-    renderTrainings();
-}
-
-// Spieler laden
-async function loadPlayers() {
+// Daten aus GitHub laden
+async function loadData() {
     try {
-        const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/laundry/data.json`;
+        const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}`;
         const headers = {
             'Accept': 'application/vnd.github.v3+json'
         };
@@ -65,49 +56,41 @@ async function loadPlayers() {
         
         if (response.ok) {
             const data = await response.json();
-            playerFileSHA = data.sha;
+            fileSHA = data.sha;
             const binaryString = atob(data.content);
             const bytes = Uint8Array.from(binaryString, char => char.charCodeAt(0));
             const content = new TextDecoder().decode(bytes);
-            players = JSON.parse(content);
-        }
-    } catch (error) {
-        console.error('Fehler beim Laden der Spieler:', error);
-    }
-}
-
-// Trainings laden
-async function loadTrainings() {
-    try {
-        const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/training/data.json`;
-        const headers = {
-            'Accept': 'application/vnd.github.v3+json'
-        };
-        
-        if (githubToken) {
-            headers['Authorization'] = `token ${githubToken}`;
-        }
-        
-        const response = await fetch(url, { headers });
-        
-        if (response.ok) {
-            const data = await response.json();
-            trainingFileSHA = data.sha;
-            const binaryString = atob(data.content);
-            const bytes = Uint8Array.from(binaryString, char => char.charCodeAt(0));
-            const content = new TextDecoder().decode(bytes);
-            trainings = JSON.parse(content);
+            appData = JSON.parse(content);
+            // Kompatibilität: Falls alte Struktur, konvertiere
+            if (Array.isArray(appData)) {
+                appData = { players: appData, trainings: [] };
+            }
+            players = appData.players;
+            trainings = appData.trainings || [];
+            
+            // Stelle sicher, dass jeder Spieler ein trainings-Array hat
+            players.forEach(player => {
+                if (!player.trainings) {
+                    player.trainings = [];
+                }
+            });
         } else if (response.status === 404) {
+            appData = { players: [], trainings: [] };
+            players = [];
             trainings = [];
         }
     } catch (error) {
-        console.error('Fehler beim Laden der Trainings:', error);
+        console.error('Fehler beim Laden:', error);
+        appData = { players: [], trainings: [] };
+        players = [];
         trainings = [];
     }
+    
+    renderTrainings();
 }
 
-// Trainings in GitHub speichern
-async function saveTrainings(commitMessage = null) {
+// Daten in GitHub speichern
+async function saveData(commitMessage = null) {
     if (!githubToken) {
         const token = prompt(
             'Zum Speichern wird ein GitHub Personal Access Token benötigt:\n\n' +
@@ -127,12 +110,12 @@ async function saveTrainings(commitMessage = null) {
     }
     
     try {
-        const jsonString = JSON.stringify(trainings, null, 2);
+        const jsonString = JSON.stringify(appData, null, 2);
         const utf8Bytes = new TextEncoder().encode(jsonString);
         const binaryString = Array.from(utf8Bytes, byte => String.fromCharCode(byte)).join('');
         const content = btoa(binaryString);
         
-        const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/training/data.json`;
+        const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}`;
         
         const body = {
             message: commitMessage || `Update Trainingsplan - ${new Date().toLocaleString('de-DE')}`,
@@ -140,8 +123,8 @@ async function saveTrainings(commitMessage = null) {
             branch: GITHUB_CONFIG.branch
         };
         
-        if (trainingFileSHA) {
-            body.sha = trainingFileSHA;
+        if (fileSHA) {
+            body.sha = fileSHA;
         }
         
         const response = await fetch(url, {
@@ -156,7 +139,7 @@ async function saveTrainings(commitMessage = null) {
         
         if (response.ok) {
             const data = await response.json();
-            trainingFileSHA = data.content.sha;
+            fileSHA = data.content.sha;
             console.log('Daten erfolgreich gespeichert');
         } else {
             const error = await response.json();
@@ -197,14 +180,21 @@ function renderTrainings() {
         new Date(b.date) - new Date(a.date)
     );
     
-    container.innerHTML = sortedTrainings.map(training => `
-        <div class="training-item" onclick="openTrainingDetails(${training.id})">
-            <div class="training-header">
-                <div class="training-date">${formatDate(training.date)}</div>
-                <div class="training-participants-count">${training.participants.length} Teilnehmer</div>
+    container.innerHTML = sortedTrainings.map(training => {
+        // Zähle Teilnehmer: Spieler, die diese Training-ID haben
+        const participantCount = players.filter(p => 
+            p.trainings && p.trainings.includes(training.id)
+        ).length;
+        
+        return `
+            <div class="training-item" onclick="openTrainingDetails(${training.id})">
+                <div class="training-header">
+                    <div class="training-date">${formatDate(training.date)}</div>
+                    <div class="training-participants-count">${participantCount} Teilnehmer</div>
+                </div>
             </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // Overlay öffnen: Neues Training
@@ -267,16 +257,30 @@ async function saveNewTraining() {
         return;
     }
     
+    const trainingId = Date.now();
+    
+    // Training-Objekt erstellen (nur id und date)
     const newTraining = {
-        id: Date.now(),
-        date: date,
-        participants: Array.from(selectedPlayers)
+        id: trainingId,
+        date: date
     };
     
     trainings.push(newTraining);
     
-    const commitMessage = `Training hinzugefügt: ${formatDate(date)} (${newTraining.participants.length} Teilnehmer)`;
-    await saveTrainings(commitMessage);
+    // Training-ID zu allen ausgewählten Spielern hinzufügen
+    selectedPlayers.forEach(playerId => {
+        const player = players.find(p => p.id === playerId);
+        if (player) {
+            if (!player.trainings) {
+                player.trainings = [];
+            }
+            player.trainings.push(trainingId);
+        }
+    });
+    
+    const participantCount = selectedPlayers.size;
+    const commitMessage = `Training hinzugefügt: ${formatDate(date)} (${participantCount} Teilnehmer)`;
+    await saveData(commitMessage);
     
     renderTrainings();
     closeAddTrainingOverlay();
@@ -306,22 +310,24 @@ function renderParticipants(training) {
     const container = document.getElementById('participantsList');
     const countElement = document.getElementById('participantCount');
     
-    countElement.textContent = training.participants.length;
+    // Finde alle Spieler, die diese Training-ID haben
+    const participants = players.filter(p => 
+        p.trainings && p.trainings.includes(training.id)
+    );
     
-    if (training.participants.length === 0) {
+    countElement.textContent = participants.length;
+    
+    if (participants.length === 0) {
         container.innerHTML = '<p style="color: #999;">Noch keine Teilnehmer.</p>';
         return;
     }
     
-    container.innerHTML = training.participants.map(playerId => {
-        const player = players.find(p => p.id === playerId);
-        if (!player) return '';
-        
+    container.innerHTML = participants.map(player => {
         return `
             <div class="participant-item">
                 <span class="participant-name">${player.name}</span>
                 <button class="remove-participant-btn" 
-                        onclick="removeParticipant(${playerId})"
+                        onclick="removeParticipant(${player.id})"
                         title="Entfernen">×</button>
             </div>
         `;
@@ -334,7 +340,7 @@ function renderAvailablePlayers(training) {
     
     // Filtere Spieler, die noch nicht teilnehmen
     const availablePlayers = players.filter(p => 
-        !training.participants.includes(p.id)
+        !p.trainings || !p.trainings.includes(training.id)
     ).sort((a, b) => a.name.localeCompare(b.name, 'de'));
     
     if (availablePlayers.length === 0) {
@@ -354,17 +360,20 @@ async function removeParticipant(playerId) {
     const training = trainings.find(t => t.id === currentTrainingId);
     if (!training) return;
     
-    const playerIndex = training.participants.indexOf(playerId);
-    if (playerIndex > -1) {
-        const player = players.find(p => p.id === playerId);
-        training.participants.splice(playerIndex, 1);
-        
-        const commitMessage = `Teilnehmer entfernt: ${player.name} von Training ${formatDate(training.date)}`;
-        await saveTrainings(commitMessage);
-        
-        renderParticipants(training);
-        renderAvailablePlayers(training);
-        renderTrainings();
+    const player = players.find(p => p.id === playerId);
+    if (player && player.trainings) {
+        // Entferne Training-ID aus dem Spieler
+        const trainingIndex = player.trainings.indexOf(training.id);
+        if (trainingIndex > -1) {
+            player.trainings.splice(trainingIndex, 1);
+            
+            const commitMessage = `Teilnehmer entfernt: ${player.name} von Training ${formatDate(training.date)}`;
+            await saveData(commitMessage);
+            
+            renderParticipants(training);
+            renderAvailablePlayers(training);
+            renderTrainings();
+        }
     }
 }
 
@@ -373,16 +382,22 @@ async function addParticipant(playerId) {
     const training = trainings.find(t => t.id === currentTrainingId);
     if (!training) return;
     
-    if (!training.participants.includes(playerId)) {
-        const player = players.find(p => p.id === playerId);
-        training.participants.push(playerId);
+    const player = players.find(p => p.id === playerId);
+    if (player) {
+        if (!player.trainings) {
+            player.trainings = [];
+        }
         
-        const commitMessage = `Teilnehmer hinzugefügt: ${player.name} zu Training ${formatDate(training.date)}`;
-        await saveTrainings(commitMessage);
-        
-        renderParticipants(training);
-        renderAvailablePlayers(training);
-        renderTrainings();
+        if (!player.trainings.includes(training.id)) {
+            player.trainings.push(training.id);
+            
+            const commitMessage = `Teilnehmer hinzugefügt: ${player.name} zu Training ${formatDate(training.date)}`;
+            await saveData(commitMessage);
+            
+            renderParticipants(training);
+            renderAvailablePlayers(training);
+            renderTrainings();
+        }
     }
 }
 
@@ -396,10 +411,20 @@ async function deleteTraining() {
     const index = trainings.findIndex(t => t.id === currentTrainingId);
     
     if (index > -1) {
+        // Entferne Training-ID von allen Spielern
+        players.forEach(player => {
+            if (player.trainings) {
+                const trainingIndex = player.trainings.indexOf(training.id);
+                if (trainingIndex > -1) {
+                    player.trainings.splice(trainingIndex, 1);
+                }
+            }
+        });
+        
         trainings.splice(index, 1);
         
         const commitMessage = `Training gelöscht: ${formatDate(training.date)}`;
-        await saveTrainings(commitMessage);
+        await saveData(commitMessage);
         
         closeDetailsOverlay();
         renderTrainings();

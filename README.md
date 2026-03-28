@@ -32,6 +32,7 @@ Zentrale Navigation zu allen Team-Funktionen
 ```
 fco-2/
 ├── index.html              # Startseite
+├── data.json               # Globale Daten (Spieler & Trainings)
 ├── style.css               # Globale Styles (Header, Komponenten)
 ├── home.css                # Styles für Startseite
 ├── manifest.json           # Globale PWA-Konfiguration
@@ -42,14 +43,21 @@ fco-2/
 ├── training/
 │   ├── training.html       # Trainingsplan-Seite
 │   ├── training.css        # Trainingsplan-spezifische Styles
-│   ├── training.js         # Trainingsplan-Logik
-│   └── data.json           # Trainingsdaten
+│   └── training.js         # Trainingsplan-Logik
 └── laundry/
     ├── laundry.html        # Trikotwäsche-App
     ├── laundry.css         # Trikotwäsche-spezifische Styles
-    ├── script.js           # App-Logik
-    └── data.json           # Spielerdaten
+    └── script.js           # App-Logik
 ```
+
+**Datenarchitektur:**
+- `data.json` - Zentrale Datenhaltung mit Struktur:
+  ```json
+  {
+    "players": [...],    // Spieler mit Waschdaten
+    "trainings": [...]   // Trainings mit Teilnehmern
+  }
+  ```
 
 **CSS-Architektur:**
 - `style.css` - Globale Komponenten (Header, Theme-Variablen)
