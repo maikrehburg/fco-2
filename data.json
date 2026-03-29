@@ -56,7 +56,12 @@
     {
       "id": 9,
       "name": "Eric B.",
-      "washDates": [],
+      "washDates": [
+        {
+        "date": "2026-03-20",
+        "opponent": "Holzhausen"
+        }
+      ],
       "trainings": []
     },
     {
