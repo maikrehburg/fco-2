@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainingsplan - FC Oppenwehe II</title>
+    
+    <!-- PWA und App-Icons -->
+    <link rel="apple-touch-icon" href="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif">
+    <link rel="icon" type="image/gif" href="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#b32d06">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Trainingsplan">
+    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="training.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <img src="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif" alt="FCO" class="logo-small">
+            <h1>Trainingsplan</h1>
+            <button id="settingsBtn" class="settings-btn" onclick="resetGitHubToken()" title="GitHub Token zurücksetzen" style="display: none;">⚙️</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="add-section">
+            <button class="btn-primary" onclick="openAddTrainingOverlay()">+ Neues Training</button>
+        </div>
+
+        <div class="trainings-list" id="trainingsList">
+            <!-- Trainings werden hier dynamisch eingefügt -->
+        </div>
+    </div>
+
+    <!-- Overlay: Neues Training -->
+    <div id="addTrainingOverlay" class="overlay">
+        <div class="overlay-content">
+            <h2>Neues Training hinzufügen</h2>
+            <form id="trainingForm">
+                <div class="form-group">
+                    <label for="trainingDate">Datum:</label>
+                    <input type="date" id="trainingDate" required>
+                </div>
+                <div class="form-group">
+                    <label>Teilnehmer:</label>
+                    <div id="playerSelectionList" class="player-selection-list">
+                        <!-- Spielerliste wird hier dynamisch eingefügt -->
+                    </div>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Speichern</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddTrainingOverlay()">Abbrechen</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Overlay: Training Details -->
+    <div id="trainingDetailsOverlay" class="overlay">
+        <div class="overlay-content">
+            <h2>Training vom <span id="detailsDate"></span></h2>
+            <div class="form-group">
+                <label>Teilnehmer (<span id="participantCount">0</span>):</label>
+                <div id="participantsList" class="participants-list">
+                    <!-- Teilnehmer werden hier angezeigt -->
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Weitere Teilnehmer hinzufügen:</label>
+                <div id="addPlayersList" class="player-selection-list">
+                    <!-- Verfügbare Spieler werden hier angezeigt -->
+                </div>
+            </div>
+            <div class="form-buttons">
+                <button type="button" class="btn btn-secondary" onclick="closeDetailsOverlay()">Schließen</button>
+                <button type="button" class="btn btn-danger" onclick="deleteTraining()">Training löschen</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../config.js"></script>
+    <script src="training.js"></script>
+</body>
+</html>

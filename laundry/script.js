@@ -1,5 +1,6 @@
 // Datenstruktur für Spieler und Waschdaten
-let players = [];
+let appData = { players: [], trainings: [] };
+let players = []; // Referenz auf appData.players für Kompatibilität
 let currentPlayerId = null;
 let githubToken = localStorage.getItem('githubToken') || '';
 let fileSHA = null; // Wird benötigt für Updates
@@ -78,28 +79,47 @@ async function loadData() {
             const binaryString = atob(data.content);
             const bytes = Uint8Array.from(binaryString, char => char.charCodeAt(0));
             const content = new TextDecoder().decode(bytes);
-            players = JSON.parse(content);
+            appData = JSON.parse(content);
+            // Kompatibilität: Falls alte Struktur (Array), konvertiere zu neuer Struktur
+            if (Array.isArray(appData)) {
+                appData = { players: appData, trainings: [] };
+            }
+            players = appData.players;
+            
+            // Stelle sicher, dass jeder Spieler ein trainings-Array hat
+            players.forEach(player => {
+                if (!player.trainings) {
+                    player.trainings = [];
+                }
+            });
         } else if (response.status === 404) {
             // Datei existiert noch nicht - verwende Beispieldaten
-            players = [
-                {
-                    id: Date.now(),
-                    name: 'Max Mustermann',
-                    washDates: []
-                },
-                {
-                    id: Date.now() + 1,
-                    name: 'Lisa Schmidt',
-                    washDates: []
-                }
-            ];
+            appData = {
+                players: [
+                    {
+                        id: Date.now(),
+                        name: 'Max Mustermann',
+                        washDates: [],
+                        trainings: []
+                    },
+                    {
+                        id: Date.now() + 1,
+                        name: 'Lisa Schmidt',
+                        washDates: [],
+                        trainings: []
+                    }
+                ],
+                trainings: []
+            };
+            players = appData.players;
         } else {
             throw new Error(`GitHub API Fehler: ${response.status}`);
         }
     } catch (error) {
         console.error('Fehler beim Laden:', error);
         alert('Fehler beim Laden der Daten von GitHub. Prüfe die Konfiguration in config.js.');
-        players = [];
+        appData = { players: [], trainings: [] };
+        players = appData.players;
     }
     
     renderTable();
@@ -129,7 +149,7 @@ async function saveData(commitMessage = null) {
     
     try {
         // UTF-8 korrekt enkodieren für btoa()
-        const jsonString = JSON.stringify(players, null, 2);
+        const jsonString = JSON.stringify(appData, null, 2);
         const utf8Bytes = new TextEncoder().encode(jsonString);
         const binaryString = Array.from(utf8Bytes, byte => String.fromCharCode(byte)).join('');
         const content = btoa(binaryString);
@@ -303,7 +323,8 @@ function addPlayer() {
     const newPlayer = {
         id: Date.now(),
         name: name,
-        washDates: []
+        washDates: [],
+        trainings: []
     };
     
     players.push(newPlayer);

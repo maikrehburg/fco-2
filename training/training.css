@@ -1,0 +1,303 @@
+/* ============================================
+   Training Module Styles
+   ============================================ */
+
+body {
+    background: #f5f5f5;
+    min-height: 100vh;
+    padding: 0;
+}
+
+/* Container */
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Add Section */
+.add-section {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-primary {
+    padding: 14px 24px;
+    background: var(--fco-primary, #b32d06);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s;
+    min-height: 48px;
+}
+
+.btn-primary:hover {
+    background: var(--fco-primary-dark, #8a2205);
+}
+
+/* Trainings List */
+.trainings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.training-item {
+    background: #f8f9fa;
+    border-left: 4px solid var(--fco-primary, #b32d06);
+    border-radius: 5px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.training-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.training-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.training-date {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--fco-primary, #b32d06);
+}
+
+.training-participants {
+    font-size: 0.9em;
+    color: var(--fco-text-light, #666);
+}
+
+.training-participants-count {
+    background: var(--fco-primary, #b32d06);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+/* Player Selection */
+.player-selection-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+}
+
+.player-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.player-checkbox:hover {
+    background: #e9ecef;
+}
+
+.player-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.player-checkbox.selected {
+    background: #fce8ec;
+    border: 2px solid var(--fco-primary, #b32d06);
+}
+
+/* Participants List */
+.participants-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.participant-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #fce8ec;
+    border-radius: 5px;
+    border-left: 3px solid var(--fco-primary, #b32d06);
+}
+
+.participant-name {
+    font-weight: 500;
+    color: var(--fco-text, #333);
+}
+
+.remove-participant-btn {
+    background: #f44336;
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.remove-participant-btn:hover {
+    background: #d32f2f;
+    transform: scale(1.1);
+}
+
+/* Overlay */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay.active {
+    display: flex;
+}
+
+.overlay-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: calc(100% - 40px);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.overlay-content h2 {
+    margin-bottom: 20px;
+    color: var(--fco-primary, #b32d06);
+    border-bottom: 2px solid var(--fco-border, #e0e0e0);
+    padding-bottom: 10px;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--fco-text, #333);
+}
+
+.form-group input[type="date"] {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    min-height: 48px;
+}
+
+.form-group input[type="date"]:focus {
+    outline: none;
+    border-color: var(--fco-primary, #b32d06);
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.form-buttons button {
+    flex: 1;
+}
+
+@media (min-width: 768px) {
+    .form-buttons button {
+        flex: initial;
+    }
+}
+
+.btn {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s;
+    min-height: 48px;
+}
+
+.btn-primary {
+    background: var(--fco-primary, #b32d06);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--fco-primary-dark, #8a2205);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+.btn-danger {
+    background: var(--fco-danger, #dc3545);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: var(--fco-danger-hover, #c82333);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.empty-state p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}

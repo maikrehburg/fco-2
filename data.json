@@ -1,0 +1,219 @@
+{
+  "players": [
+    {
+      "id": 1,
+      "name": "André R.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 2,
+      "name": "Bio G.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 3,
+      "name": "Carsten B.",
+      "washDates": [
+        {
+          "date": "2026-03-08",
+          "opponent": "Nettelstedt"
+        }
+      ],
+      "trainings": []
+    },
+    {
+      "id": 4,
+      "name": "Christian H.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 5,
+      "name": "Christoph M.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 6,
+      "name": "Daniel B.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 7,
+      "name": "Eduard S.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 8,
+      "name": "Enes A.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 9,
+      "name": "Eric B.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 10,
+      "name": "Fabian V.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 11,
+      "name": "Felix H.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 12,
+      "name": "Finn-Luca H.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 13,
+      "name": "Florian V.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 14,
+      "name": "Franz M.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 15,
+      "name": "Fynn-Luca M.",
+      "washDates": [
+        {
+          "date": "2026-02-06",
+          "opponent": "Budenzauber"
+        }
+      ],
+      "trainings": []
+    },
+    {
+      "id": 16,
+      "name": "Jan B.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 17,
+      "name": "Jesse S.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 18,
+      "name": "Kai E.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 19,
+      "name": "Kim S.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 20,
+      "name": "Lars K.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 21,
+      "name": "Lennart H.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 22,
+      "name": "Lukas S.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 23,
+      "name": "Maik R.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 24,
+      "name": "Marco F.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 25,
+      "name": "Michael M.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 26,
+      "name": "Nico H.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 27,
+      "name": "Nils K.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 28,
+      "name": "Oliver N.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 29,
+      "name": "Pascal G.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 30,
+      "name": "Pascal H.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 31,
+      "name": "Sebastian W.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 32,
+      "name": "Slava B.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 33,
+      "name": "Stefan B.",
+      "washDates": [],
+      "trainings": []
+    },
+    {
+      "id": 34,
+      "name": "Timo F.",
+      "washDates": [],
+      "trainings": []
+    }
+  ],
+  "trainings": []
+}

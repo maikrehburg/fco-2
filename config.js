@@ -7,7 +7,7 @@ const GITHUB_CONFIG = {
     owner: 'maikrehburg',
     repo: 'fco-2',
     branch: 'main',
-    dataFile: 'laundry/data.json'
+    dataFile: 'data.json'
 };
 
 // App Configuration
