@@ -10,7 +10,9 @@
       "id": 2,
       "name": "Bio G.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1774800129044
+      ]
     },
     {
       "id": 3,
@@ -21,7 +23,9 @@
           "opponent": "Nettelstedt"
         }
       ],
-      "trainings": []
+      "trainings": [
+        1774800129044
+      ]
     },
     {
       "id": 4,
@@ -33,7 +37,9 @@
       "id": 5,
       "name": "Christoph M.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1774800129044
+      ]
     },
     {
       "id": 6,
@@ -58,8 +64,8 @@
       "name": "Eric B.",
       "washDates": [
         {
-        "date": "2026-03-20",
-        "opponent": "Holzhausen"
+          "date": "2026-03-20",
+          "opponent": "Holzhausen"
         }
       ],
       "trainings": []
@@ -103,13 +109,17 @@
           "opponent": "Budenzauber"
         }
       ],
-      "trainings": []
+      "trainings": [
+        1774800129044
+      ]
     },
     {
       "id": 16,
       "name": "Jan B.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1774800129044
+      ]
     },
     {
       "id": 17,
@@ -193,7 +203,9 @@
       "id": 30,
       "name": "Pascal H.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1774800129044
+      ]
     },
     {
       "id": 31,
@@ -205,7 +217,9 @@
       "id": 32,
       "name": "Slava B.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1774800129044
+      ]
     },
     {
       "id": 33,
@@ -220,5 +234,10 @@
       "trainings": []
     }
   ],
-  "trainings": []
+  "trainings": [
+    {
+      "id": 1774800129044,
+      "date": "2026-03-26"
+    }
+  ]
 }
