@@ -76,14 +76,14 @@ async function loadData() {
             });
         } else if (response.status === 404) {
             appData = { players: [], trainings: [] };
-            players = [];
-            trainings = [];
+            players = appData.players;
+            trainings = appData.trainings;
         }
     } catch (error) {
         console.error('Fehler beim Laden:', error);
         appData = { players: [], trainings: [] };
-        players = [];
-        trainings = [];
+        players = appData.players;
+        trainings = appData.trainings;
     }
     
     renderTrainings();
@@ -240,6 +240,7 @@ function renderPlayerSelection() {
 
 // Spielerauswahl umschalten
 function togglePlayerSelection(playerId) {
+    playerId = Number(playerId);
     if (selectedPlayers.has(playerId)) {
         selectedPlayers.delete(playerId);
     } else {
@@ -288,8 +289,8 @@ async function saveNewTraining() {
 
 // Training-Details öffnen
 function openTrainingDetails(trainingId) {
-    currentTrainingId = trainingId;
-    const training = trainings.find(t => t.id === trainingId);
+    currentTrainingId = Number(trainingId);
+    const training = trainings.find(t => t.id === currentTrainingId);
     
     if (!training) return;
     
@@ -357,6 +358,7 @@ function renderAvailablePlayers(training) {
 
 // Teilnehmer entfernen
 async function removeParticipant(playerId) {
+    playerId = Number(playerId);
     const training = trainings.find(t => t.id === currentTrainingId);
     if (!training) return;
     
@@ -379,6 +381,7 @@ async function removeParticipant(playerId) {
 
 // Teilnehmer hinzufügen
 async function addParticipant(playerId) {
+    playerId = Number(playerId);
     const training = trainings.find(t => t.id === currentTrainingId);
     if (!training) return;
     
