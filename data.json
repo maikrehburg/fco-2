@@ -272,7 +272,9 @@
       "id": 1775590792943,
       "name": "Hatti",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1775590777274
+      ]
     },
     {
       "id": 1775590803557,
