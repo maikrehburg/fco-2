@@ -176,7 +176,12 @@
     {
       "id": 21,
       "name": "Lennart H.",
-      "washDates": [],
+      "washDates": [
+        {
+          "date": "2026-04-12",
+          "opponent": "Isenstedt"
+        }
+      ],
       "trainings": [
         1774807123059
       ]
