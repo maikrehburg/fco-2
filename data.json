@@ -44,7 +44,12 @@
     {
       "id": 5,
       "name": "Christoph M.",
-      "washDates": [],
+      "washDates": [
+        {
+          "date": "2026-04-10",
+          "opponent": "Varl"
+        }
+      ],
       "trainings": [
         1774800129044,
         1774807123059,
@@ -120,12 +125,12 @@
       "name": "Fynn-Luca M.",
       "washDates": [
         {
-          "date": "2026-02-06",
-          "opponent": "Budenzauber"
-        },
-        {
           "date": "2026-03-29",
           "opponent": "Levern"
+        },
+        {
+          "date": "2026-02-06",
+          "opponent": "Budenzauber"
         }
       ],
       "trainings": [
