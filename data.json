@@ -11,7 +11,12 @@
     {
       "id": 2,
       "name": "Bio G.",
-      "washDates": [],
+      "washDates": [
+        {
+          "date": "2026-04-26",
+          "opponent": "TuS Stemwede"
+        }
+      ],
       "trainings": [
         1774800129044,
         1774807123059,
