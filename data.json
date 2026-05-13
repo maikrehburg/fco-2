@@ -311,7 +311,12 @@
     {
       "id": 1775590803557,
       "name": "Lars B.",
-      "washDates": [],
+      "washDates": [
+        {
+          "date": "2026-05-03",
+          "opponent": "Lübbecke"
+        }
+      ],
       "trainings": [
         1775590777274,
         1776949079747
