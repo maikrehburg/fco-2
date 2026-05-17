@@ -339,7 +339,12 @@
     {
       "id": 1777534109187,
       "name": "Milan B.",
-      "washDates": [],
+      "washDates": [
+        {
+          "date": "2026-05-17",
+          "opponent": "Tonnenheide"
+        }
+      ],
       "trainings": []
     },
     {
