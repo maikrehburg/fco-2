@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team-Management - FC Oppenwehe II</title>
+
+    <link rel="apple-touch-icon" href="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif">
+    <link rel="icon" type="image/gif" href="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#b32d06">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Team-Management">
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="team.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <a href="../index.html" class="back-btn">&#8592; Zurück</a>
+            <img src="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif" alt="FCO" class="logo-small">
+            <h1>Team-Management</h1>
+            <button id="settingsBtn" class="settings-btn" onclick="resetGitHubToken()" title="GitHub Token zurücksetzen" style="display: none;">⚙️</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="add-section">
+            <button class="btn-primary" onclick="openAddPlayerOverlay()">+ Neuer Spieler</button>
+        </div>
+
+        <div class="players-list" id="playersList">
+            <!-- Spieler werden dynamisch eingefügt -->
+        </div>
+    </div>
+
+    <!-- Overlay: Neuer Spieler -->
+    <div id="addPlayerOverlay" class="overlay">
+        <div class="overlay-content">
+            <h2>Neuen Spieler hinzufügen</h2>
+            <div class="form-group">
+                <label for="newPlayerName">Name:</label>
+                <input type="text" id="newPlayerName" placeholder="Vorname Nachname">
+            </div>
+            <div class="form-buttons">
+                <button type="button" class="btn btn-primary" onclick="addPlayer()">Hinzufügen</button>
+                <button type="button" class="btn btn-secondary" onclick="closeAddPlayerOverlay()">Abbrechen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay: Spieler Details -->
+    <div id="playerDetailsOverlay" class="overlay">
+        <div class="overlay-content">
+            <h2 id="detailsPlayerName"></h2>
+            <div class="details-section">
+                <h3>&#128085; Trikotwäschen (<span id="detailsWashCount">0</span>)</h3>
+                <div id="detailsWashList" class="details-list"></div>
+            </div>
+            <div class="details-section">
+                <h3>&#9917; Trainings (<span id="detailsTrainingCount">0</span>)</h3>
+                <div id="detailsTrainingList" class="details-list"></div>
+            </div>
+            <div class="form-buttons">
+                <button type="button" class="btn btn-secondary" onclick="closePlayerDetails()">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../config.js"></script>
+    <script src="team.js"></script>
+</body>
+</html>

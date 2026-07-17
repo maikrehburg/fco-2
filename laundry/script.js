@@ -242,58 +242,47 @@ function getSortedPlayers() {
     return sortedPlayers;
 }
 
-// Tabelle rendern
+// Tabelle rendern (nur Spieler mit Waschdaten)
 function renderTable() {
     const tbody = document.getElementById('playerTableBody');
-    
-    if (players.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="2" class="empty-state">Noch keine Spieler vorhanden. Füge einen Spieler hinzu!</td></tr>';
+
+    const playersWithWash = players.filter(p => p.washDates && p.washDates.length > 0);
+
+    if (playersWithWash.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="2" class="empty-state">Noch keine Einträge. Klicke auf "+ Neue Trikotwäsche" um zu beginnen.</td></tr>';
         return;
     }
-    
+
     tbody.innerHTML = '';
-    
-    const sortedPlayers = getSortedPlayers();
-    
+
+    let sortedPlayers = [...playersWithWash];
+    if (washSortMode !== 'none') {
+        sortedPlayers.sort((a, b) => {
+            const ca = a.washDates.length, cb = b.washDates.length;
+            return washSortMode === 'asc' ? ca - cb : cb - ca;
+        });
+    } else {
+        sortedPlayers.sort((a, b) => a.name.localeCompare(b.name, 'de'));
+    }
+
     sortedPlayers.forEach(player => {
         const row = document.createElement('tr');
-        
-        // Spieler-Name Spalte
+
         const nameCell = document.createElement('td');
-        nameCell.innerHTML = `
-            <div class="player-name">
-                <span>${player.name}</span>
-            </div>
-        `;
-        
-        // Waschdaten Spalte
+        nameCell.innerHTML = `<div class="player-name"><span>${player.name}</span></div>`;
+
         const datesCell = document.createElement('td');
-        datesCell.style.position = 'relative';
-        if (player.washDates && player.washDates.length > 0) {
-            const datesHTML = player.washDates
-                .sort((a, b) => new Date(b.date) - new Date(a.date))
-                .map((wash, index) => `
-                    <div class="wash-date-item">
-                        <strong>${formatDate(wash.date)}</strong>
-                        <span>${wash.opponent}</span>
-                        <button class="delete-wash-btn" onclick="deleteWashDate(${player.id}, ${index})" title="Eintrag löschen">×</button>
-                    </div>
-                `).join('');
-            datesCell.innerHTML = `
-                <div style="display: flex; align-items: flex-start; gap: 10px;">
-                    <div class="wash-dates" style="flex: 1;">${datesHTML}</div>
-                    <button class="add-wash-btn" onclick="openOverlay(${player.id})">+</button>
+        const datesHTML = player.washDates
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .map((wash, index) => `
+                <div class="wash-date-item">
+                    <strong>${formatDate(wash.date)}</strong>
+                    <span>${wash.opponent}</span>
+                    <button class="delete-wash-btn" onclick="deleteWashDate(${player.id}, ${index})" title="Eintrag löschen">×</button>
                 </div>
-            `;
-        } else {
-            datesCell.innerHTML = `
-                <div style="display: flex; align-items: center; justify-content: space-between;">
-                    <span style="color: #999; font-style: italic;">Noch keine Einträge</span>
-                    <button class="add-wash-btn" onclick="openOverlay(${player.id})">+</button>
-                </div>
-            `;
-        }
-        
+            `).join('');
+        datesCell.innerHTML = `<div class="wash-dates">${datesHTML}</div>`;
+
         row.appendChild(nameCell);
         row.appendChild(datesCell);
         tbody.appendChild(row);
@@ -310,40 +299,17 @@ function formatDate(dateString) {
     });
 }
 
-// Neuen Spieler hinzufügen
-function addPlayer() {
-    const input = document.getElementById('newPlayerName');
-    const name = input.value.trim();
-    
-    if (name === '') {
-        alert('Bitte einen Namen eingeben!');
-        return;
-    }
-    
-    const newPlayer = {
-        id: Date.now(),
-        name: name,
-        washDates: [],
-        trainings: []
-    };
-    
-    players.push(newPlayer);
-    saveData();
-    renderTable();
-    input.value = '';
-}
+// Overlay öffnen (Neue Trikotwäsche)
+function openWashOverlay() {
+    // Spieler-Dropdown befüllen (alle Spieler alphabetisch)
+    const select = document.getElementById('washPlayer');
+    const sorted = [...players].sort((a, b) => a.name.localeCompare(b.name, 'de'));
+    select.innerHTML = sorted.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
 
-// Overlay öffnen
-function openOverlay(playerId) {
-    currentPlayerId = playerId;
-    const overlay = document.getElementById('overlay');
-    overlay.classList.add('active');
-    
-    // Setze heutiges Datum als Standard
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('washDate').value = today;
+    document.getElementById('washDate').value = new Date().toISOString().split('T')[0];
     document.getElementById('opponent').value = '';
-    document.getElementById('opponent').focus();
+
+    document.getElementById('overlay').classList.add('active');
 }
 
 // Overlay schließen
@@ -355,25 +321,26 @@ function closeOverlay() {
 
 // Waschdatum speichern
 function saveWashDate() {
+    const playerId = Number(document.getElementById('washPlayer').value);
     const date = document.getElementById('washDate').value;
     const opponent = document.getElementById('opponent').value.trim();
-    
-    if (!date || !opponent) {
+
+    if (!playerId || !date || !opponent) {
         alert('Bitte alle Felder ausfüllen!');
         return;
     }
-    
-    const player = players.find(p => p.id === currentPlayerId);
+
+    const player = players.find(p => p.id === playerId);
     if (player) {
         if (!player.washDates) {
             player.washDates = [];
         }
-        
+
         player.washDates.push({
             date: date,
             opponent: opponent
         });
-        
+
         const commitMessage = `Wäsche hinzugefügt: ${player.name} - ${formatDate(date)} (${opponent})`;
         saveData(commitMessage);
         renderTable();
