@@ -60,7 +60,7 @@ function resetGitHubToken() {
 // Daten aus GitHub laden (ohne Token für öffentliche Repos)
 async function loadData() {
     try {
-        const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}`;
+        const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${getDataFile()}`;
         const headers = {
             'Accept': 'application/vnd.github.v3+json'
         };
@@ -154,7 +154,7 @@ async function saveData(commitMessage = null) {
         const binaryString = Array.from(utf8Bytes, byte => String.fromCharCode(byte)).join('');
         const content = btoa(binaryString);
         
-        const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}`;
+        const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${getDataFile()}`;
         
         const body = {
             message: commitMessage || `Update Trikotwäscheliste - ${new Date().toLocaleString('de-DE')}`,

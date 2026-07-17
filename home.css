@@ -135,3 +135,94 @@ footer {
     opacity: 0.8;
     font-size: 0.9em;
 }
+
+/* ============================================
+   Season Picker
+   ============================================ */
+
+.season_picker {
+    max-width: 500px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.season-picker-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px 16px;
+}
+
+.season-label {
+    color: white;
+    font-weight: 600;
+    font-size: 0.9em;
+    white-space: nowrap;
+    opacity: 0.95;
+}
+
+.season-select-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.season-select-wrapper::after {
+    content: '\25BE';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #b32d06;
+    pointer-events: none;
+    font-size: 1em;
+}
+
+#seasonSelect {
+    width: 100%;
+    padding: 8px 36px 8px 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: 700;
+    color: #b32d06;
+    background: white;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    outline: none;
+}
+
+#seasonSelect:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+.season-new-btn {
+    flex: 1;
+    padding: 8px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    background: transparent;
+    color: white;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.season-new-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: white;
+}
+
+.season-loading {
+    display: block;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85em;
+    padding: 4px 0;
+    text-align: center;
+}
