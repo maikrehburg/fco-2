@@ -16,13 +16,17 @@
       "id": 3,
       "name": "Carsten B.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784357636918
+      ]
     },
     {
       "id": 4,
       "name": "Christian H.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784357636918
+      ]
     },
     {
       "id": 5,
@@ -46,7 +50,9 @@
       "id": 9,
       "name": "Eric B.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784357636918
+      ]
     },
     {
       "id": 11,
@@ -82,7 +88,9 @@
       "id": 18,
       "name": "Kai E.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784357636918
+      ]
     },
     {
       "id": 20,
@@ -94,7 +102,9 @@
       "id": 21,
       "name": "Lennart H.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784357636918
+      ]
     },
     {
       "id": 22,
@@ -106,7 +116,9 @@
       "id": 23,
       "name": "Maik R.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784357636918
+      ]
     },
     {
       "id": 24,
@@ -130,13 +142,17 @@
       "id": 30,
       "name": "Pascal H.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784357636918
+      ]
     },
     {
       "id": 31,
       "name": "Sebastian W.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784357636918
+      ]
     },
     {
       "id": 32,
@@ -160,7 +176,9 @@
       "id": 1775590792943,
       "name": "Hatti",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784357636918
+      ]
     },
     {
       "id": 1777534109187,
@@ -175,5 +193,10 @@
       "trainings": []
     }
   ],
-  "trainings": []
+  "trainings": [
+    {
+      "id": 1784357636918,
+      "date": "2026-07-16"
+    }
+  ]
 }
