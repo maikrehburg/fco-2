@@ -10,14 +10,17 @@
       "id": 2,
       "name": "Bio G.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784833099891
+      ]
     },
     {
       "id": 3,
       "name": "Carsten B.",
       "washDates": [],
       "trainings": [
-        1784357636918
+        1784357636918,
+        1784833099891
       ]
     },
     {
@@ -32,7 +35,9 @@
       "id": 5,
       "name": "Christoph M.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784833099891
+      ]
     },
     {
       "id": 7,
@@ -51,14 +56,17 @@
       "name": "Eric B.",
       "washDates": [],
       "trainings": [
-        1784357636918
+        1784357636918,
+        1784833099891
       ]
     },
     {
       "id": 11,
       "name": "Felix H.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784833099891
+      ]
     },
     {
       "id": 12,
@@ -76,13 +84,17 @@
       "id": 15,
       "name": "Fynn-Luca M.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784833099891
+      ]
     },
     {
       "id": 16,
       "name": "Jan B.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784833099891
+      ]
     },
     {
       "id": 18,
@@ -117,14 +129,17 @@
       "name": "Maik R.",
       "washDates": [],
       "trainings": [
-        1784357636918
+        1784357636918,
+        1784833099891
       ]
     },
     {
       "id": 24,
       "name": "Marco F.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784833099891
+      ]
     },
     {
       "id": 27,
@@ -151,7 +166,8 @@
       "name": "Sebastian W.",
       "washDates": [],
       "trainings": [
-        1784357636918
+        1784357636918,
+        1784833099891
       ]
     },
     {
@@ -172,7 +188,9 @@
       "id": 34,
       "name": "Timo F.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784833099891
+      ]
     },
     {
       "id": 1775590792943,
@@ -192,13 +210,19 @@
       "id": 1778689941547,
       "name": "Lars B.",
       "washDates": [],
-      "trainings": []
+      "trainings": [
+        1784833099891
+      ]
     }
   ],
   "trainings": [
     {
       "id": 1784357636918,
       "date": "2026-07-16"
+    },
+    {
+      "id": 1784833099891,
+      "date": "2026-07-23"
     }
   ]
 }
