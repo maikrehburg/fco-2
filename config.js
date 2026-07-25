@@ -32,10 +32,10 @@ function setCurrentSeason(key) {
 }
 
 // Gibt den Dateinamen der aktuellen Saison zurück.
-// Fällt auf data.json zurück wenn noch keine Saison ausgewählt wurde.
+// Nutzt immer season_XXXX.json Format - keine Fallback auf data.json mehr
 function getDataFile() {
-    const season = localStorage.getItem('fco_current_season');
-    return season ? `season_${season}.json` : 'data.json';
+    const season = getCurrentSeason();
+    return `season_${season}.json`;
 }
 
 // '2526' → '25/26'
