@@ -7,6 +7,7 @@ let players = [];
 let trainings = [];
 let githubToken = localStorage.getItem('githubToken') || '';
 let fileSHA = null;
+let currentPlayerId = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     updateSettingsButton();
@@ -22,6 +23,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('playerDetailsOverlay').addEventListener('click', function(e) {
         if (e.target === this) closePlayerDetails();
+    });
+
+    document.getElementById('addAbsenceOverlay').addEventListener('click', function(e) {
+        if (e.target === this) closeAbsenceOverlay();
+    });
+
+    document.getElementById('absenceForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        addAbsence();
     });
 });
 
@@ -54,7 +64,10 @@ async function loadData() {
             if (Array.isArray(appData)) appData = { players: appData, trainings: [] };
             players = appData.players;
             trainings = appData.trainings || [];
-            players.forEach(p => { if (!p.trainings) p.trainings = []; });
+            players.forEach(p => {
+                if (!p.trainings) p.trainings = [];
+                if (!p.absences) p.absences = [];
+            });
         } else if (response.status === 404) {
             appData = { players: [], trainings: [] };
             players = [];
@@ -159,7 +172,10 @@ function renderPlayers() {
                         <span class="stat-badge" title="Trainingsteilnahmen">&#9917; ${trainingCount}</span>
                     </div>
                 </div>
-                <button class="delete-player-btn" onclick="event.stopPropagation(); deletePlayer(${player.id})" title="Spieler entfernen">&#128465;</button>
+                <div class="player-actions">
+                    <button class="absence-btn" onclick="event.stopPropagation(); openAddAbsenceOverlay(${player.id})" title="Abwesenheit hinzufügen">&#128197;</button>
+                    <button class="delete-player-btn" onclick="event.stopPropagation(); deletePlayer(${player.id})" title="Spieler entfernen">&#128465;</button>
+                </div>
             </div>
         `;
     }).join('');
@@ -183,7 +199,7 @@ async function addPlayer() {
         return;
     }
 
-    const newPlayer = { id: Date.now(), name, washDates: [], trainings: [] };
+    const newPlayer = { id: Date.now(), name, washDates: [], trainings: [], absences: [] };
     appData.players.push(newPlayer);
     players = appData.players;
     await saveData(`Spieler hinzugefügt: ${name}`);
@@ -244,9 +260,102 @@ function openPlayerDetails(id) {
         `).join('');
     }
 
+    // Abwesenheiten
+    const absences = player.absences || [];
+    document.getElementById('detailsAbsenceCount').textContent = absences.length;
+    const absenceList = document.getElementById('detailsAbsenceList');
+    if (absences.length === 0) {
+        absenceList.innerHTML = '<p class="empty-detail">Noch keine Einträge.</p>';
+    } else {
+        const sorted = [...absences].sort((a, b) => new Date(b.from) - new Date(a.from));
+        absenceList.innerHTML = sorted.map((a, idx) => {
+            const fromDate = formatDate(a.from);
+            const toDate = formatDate(a.to);
+            const dateRange = a.from === a.to ? fromDate : `${fromDate} - ${toDate}`;
+            return `
+                <div class="detail-item">
+                    <span class="detail-date">${dateRange}</span>
+                    <button class="remove-detail-btn" onclick="event.stopPropagation(); deleteAbsence(${player.id}, ${idx})" title="Eintrag löschen">×</button>
+                </div>
+            `;
+        }).join('');
+    }
+
+    currentPlayerId = id;
     document.getElementById('playerDetailsOverlay').classList.add('active');
 }
 
 function closePlayerDetails() {
     document.getElementById('playerDetailsOverlay').classList.remove('active');
+    currentPlayerId = null;
+}
+
+function openAddAbsenceOverlay(playerId) {
+    playerId = Number(playerId);
+    const player = players.find(p => p.id === playerId);
+    if (!player) return;
+
+    currentPlayerId = playerId;
+    document.getElementById('absencePlayerName').textContent = player.name;
+
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('absenceFromDate').value = today;
+    document.getElementById('absenceToDate').value = today;
+
+    document.getElementById('addAbsenceOverlay').classList.add('active');
+}
+
+function closeAbsenceOverlay() {
+    document.getElementById('addAbsenceOverlay').classList.remove('active');
+}
+
+async function addAbsence() {
+    const fromDate = document.getElementById('absenceFromDate').value;
+    const toDate = document.getElementById('absenceToDate').value;
+
+    if (!fromDate || !toDate) {
+        alert('Bitte alle Felder ausfüllen!');
+        return;
+    }
+
+    if (fromDate > toDate) {
+        alert('Startdatum kann nicht nach Enddatum liegen!');
+        return;
+    }
+
+    const player = players.find(p => p.id === currentPlayerId);
+    if (!player) return;
+
+    if (!player.absences) {
+        player.absences = [];
+    }
+
+    player.absences.push({ from: fromDate, to: toDate });
+
+    const dateRange = fromDate === toDate ? formatDate(fromDate) : `${formatDate(fromDate)} - ${formatDate(toDate)}`;
+    await saveData(`Abwesenheit hinzugefügt: ${player.name} - ${dateRange}`);
+    renderPlayers();
+    closeAbsenceOverlay();
+}
+
+async function deleteAbsence(playerId, absenceIndex) {
+    playerId = Number(playerId);
+    const player = players.find(p => p.id === playerId);
+    if (!player || !player.absences) return;
+
+    const absence = player.absences[absenceIndex];
+    if (!absence) return;
+
+    if (!confirm('Abwesenheit wirklich löschen?')) return;
+
+    const dateRange = absence.from === absence.to ? formatDate(absence.from) : `${formatDate(absence.from)} - ${formatDate(absence.to)}`;
+    player.absences.splice(absenceIndex, 1);
+    await saveData(`Abwesenheit entfernt: ${player.name} - ${dateRange}`);
+    
+    // Aktualisiere Detail-Overlay falls noch offen
+    if (currentPlayerId === playerId) {
+        openPlayerDetails(playerId);
+    } else {
+        renderPlayers();
+    }
 }
