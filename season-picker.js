@@ -12,7 +12,6 @@ async function initSeasonPicker() {
     renderSeasonPicker(container, seasons);
 }
 
-// Listet alle season_XXXX.json Dateien im GitHub-Root
 async function discoverSeasons() {
     try {
         const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/`;
@@ -90,14 +89,8 @@ function updateSeasonDescription(key) {
 }
 
 async function createNewSeason() {
-    const token = localStorage.getItem('githubToken');
-    if (!token) {
-        alert(
-            'Zum Anlegen einer neuen Saison wird ein GitHub Token benötigt.\n\n' +
-            'Bitte zuerst in Trikotwäsche oder Training einloggen.'
-        );
-        return;
-    }
+    const token = checkGitHubToken();
+    if (!token) return;
 
     const input = prompt('Neue Saison anlegen\n\nSaisonbezeichnung eingeben (z.B. 26/27):');
     if (!input) return;

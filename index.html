@@ -21,6 +21,7 @@
         <img src="https://assets.vereinify.com/b9973154-a615-420a-a696-0343240a7750/header.logo/1651081669/FCO-Wappen.gif" alt="FCO Wappen" class="logo">
         <h1>FC Oppenwehe II</h1>
         <p class="subtitle">Team-Management</p>
+        <button id="settingsBtn" class="settings-btn" onclick="toggleAuthUI()" title="Token eingeben">⚙️</button>
     </div>
 
     <div class="season_picker">
@@ -59,7 +60,42 @@
         <p>FC Oppenwehe - Westfalen</p>
     </footer>
 
+    <!-- Auth Modal -->
+    <div id="authModal" class="overlay">
+        <div class="overlay-content">
+            <h2>GitHub Token</h2>
+            <p>Geben Sie Ihren GitHub Personal Access Token ein, um Änderungen speichern zu können.</p>
+            <form id="authForm" onsubmit="event.preventDefault(); saveGitHubToken();">
+                <div class="form-group">
+                    <label for="tokenInput">Token:</label>
+                    <input type="password" id="tokenInput" placeholder="ghp_..." required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Speichern</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAuthModal()">Abbrechen</button>
+                    <button type="button" class="btn btn-danger" onclick="resetGitHubToken()" title="Aktuellen Token entfernen">Abmelden</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="config.js"></script>
     <script src="season-picker.js"></script>
+    <script>
+        function toggleAuthUI() {
+            const token = localStorage.getItem('githubToken');
+            if (token) {
+                resetGitHubToken();
+            } else {
+                openAuthModal();
+            }
+        }
+
+        // Beim Laden der Page Token-Status anzeigen
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSettingsButton();
+            initSeasonPicker();
+        });
+    </script>
 </body>
 </html>
