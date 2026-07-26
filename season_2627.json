@@ -4,7 +4,8 @@
       "id": 1,
       "name": "André R.",
       "washDates": [],
-      "trainings": []
+      "trainings": [],
+      "absences": []
     },
     {
       "id": 2,
@@ -12,7 +13,8 @@
       "washDates": [],
       "trainings": [
         1784833099891
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 3,
@@ -21,7 +23,8 @@
       "trainings": [
         1784357636918,
         1784833099891
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 4,
@@ -29,7 +32,8 @@
       "washDates": [],
       "trainings": [
         1784357636918
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 5,
@@ -37,19 +41,27 @@
       "washDates": [],
       "trainings": [
         1784833099891
+      ],
+      "absences": [
+        {
+          "from": "2026-07-26",
+          "to": "2026-08-02"
+        }
       ]
     },
     {
       "id": 7,
       "name": "Eduard S.",
       "washDates": [],
-      "trainings": []
+      "trainings": [],
+      "absences": []
     },
     {
       "id": 8,
       "name": "Enes A.",
       "washDates": [],
-      "trainings": []
+      "trainings": [],
+      "absences": []
     },
     {
       "id": 9,
@@ -58,7 +70,8 @@
       "trainings": [
         1784357636918,
         1784833099891
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 11,
@@ -66,19 +79,22 @@
       "washDates": [],
       "trainings": [
         1784833099891
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 12,
       "name": "Finn-Luca H.",
       "washDates": [],
-      "trainings": []
+      "trainings": [],
+      "absences": []
     },
     {
       "id": 13,
       "name": "Florian V.",
       "washDates": [],
-      "trainings": []
+      "trainings": [],
+      "absences": []
     },
     {
       "id": 15,
@@ -86,7 +102,8 @@
       "washDates": [],
       "trainings": [
         1784833099891
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 16,
@@ -94,7 +111,8 @@
       "washDates": [],
       "trainings": [
         1784833099891
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 18,
@@ -102,13 +120,15 @@
       "washDates": [],
       "trainings": [
         1784357636918
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 20,
       "name": "Lars K.",
       "washDates": [],
-      "trainings": []
+      "trainings": [],
+      "absences": []
     },
     {
       "id": 21,
@@ -116,13 +136,15 @@
       "washDates": [],
       "trainings": [
         1784357636918
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 22,
       "name": "Lukas S.",
       "washDates": [],
-      "trainings": []
+      "trainings": [],
+      "absences": []
     },
     {
       "id": 23,
@@ -131,7 +153,8 @@
       "trainings": [
         1784357636918,
         1784833099891
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 24,
@@ -139,19 +162,22 @@
       "washDates": [],
       "trainings": [
         1784833099891
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 27,
       "name": "Nils K.",
       "washDates": [],
-      "trainings": []
+      "trainings": [],
+      "absences": []
     },
     {
       "id": 28,
       "name": "Oliver N.",
       "washDates": [],
-      "trainings": []
+      "trainings": [],
+      "absences": []
     },
     {
       "id": 30,
@@ -159,7 +185,8 @@
       "washDates": [],
       "trainings": [
         1784357636918
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 31,
@@ -168,13 +195,15 @@
       "trainings": [
         1784357636918,
         1784833099891
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 32,
       "name": "Slava B.",
       "washDates": [],
-      "trainings": []
+      "trainings": [],
+      "absences": []
     },
     {
       "id": 33,
@@ -182,7 +211,8 @@
       "washDates": [],
       "trainings": [
         1784357636918
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 34,
@@ -190,7 +220,8 @@
       "washDates": [],
       "trainings": [
         1784833099891
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 1775590792943,
@@ -198,13 +229,15 @@
       "washDates": [],
       "trainings": [
         1784357636918
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 1777534109187,
       "name": "Milan B.",
       "washDates": [],
-      "trainings": []
+      "trainings": [],
+      "absences": []
     },
     {
       "id": 1778689941547,
@@ -212,7 +245,8 @@
       "washDates": [],
       "trainings": [
         1784833099891
-      ]
+      ],
+      "absences": []
     },
     {
       "id": 1784833179177,
@@ -220,7 +254,8 @@
       "washDates": [],
       "trainings": [
         1784833099891
-      ]
+      ],
+      "absences": []
     }
   ],
   "trainings": [
