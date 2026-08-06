@@ -201,7 +201,12 @@
     {
       "id": 30,
       "name": "Pascal H.",
-      "washDates": [],
+      "washDates": [
+        {
+          "date": "2026-08-06",
+          "opponent": "Wittlager Land"
+        }
+      ],
       "trainings": [
         1784357636918,
         1785397285145,
