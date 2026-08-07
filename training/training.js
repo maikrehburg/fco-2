@@ -161,6 +161,16 @@ function formatDate(dateString) {
     });
 }
 
+// Datum fuer die Trainingsansicht mit deutschem Wochentag formatieren
+function formatTrainingDisplayDate(dateString) {
+    const date = new Date(dateString);
+    const weekday = date.toLocaleDateString('de-DE', {
+        weekday: 'short'
+    });
+
+    return `${weekday} ${formatDate(dateString)}`;
+}
+
 // Trainings rendern
 function renderTrainings() {
     const container = document.getElementById('trainingsList');
@@ -189,7 +199,7 @@ function renderTrainings() {
         return `
             <div class="training-item" onclick="openTrainingDetails(${training.id})">
                 <div class="training-header">
-                    <div class="training-date">${formatDate(training.date)}</div>
+                    <div class="training-date">${formatTrainingDisplayDate(training.date)}</div>
                     <div class="training-participants-count">${participantCount} Teilnehmer</div>
                 </div>
             </div>
@@ -294,7 +304,7 @@ function openTrainingDetails(trainingId) {
     
     if (!training) return;
     
-    document.getElementById('detailsDate').textContent = formatDate(training.date);
+    document.getElementById('detailsDate').textContent = formatTrainingDisplayDate(training.date);
     renderParticipants(training);
     renderAvailablePlayers(training);
     document.getElementById('trainingDetailsOverlay').classList.add('active');
