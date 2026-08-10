@@ -21,7 +21,12 @@
     {
       "id": 3,
       "name": "Carsten B.",
-      "washDates": [],
+      "washDates": [
+        {
+          "date": "2026-08-09",
+          "opponent": "Börninghausen"
+        }
+      ],
       "trainings": [
         1784357636918,
         1784833099891,
