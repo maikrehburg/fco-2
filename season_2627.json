@@ -311,7 +311,9 @@
       "id": 1786475915283,
       "name": "Michael T.",
       "washDates": [],
-      "trainings": [],
+      "trainings": [
+        1786475895468
+      ],
       "absences": []
     }
   ],
