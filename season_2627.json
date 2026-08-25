@@ -352,7 +352,9 @@
       "id": 1787683155773,
       "name": "Ewes",
       "washDates": [],
-      "trainings": [],
+      "trainings": [
+        1787683138334
+      ],
       "absences": []
     }
   ],
