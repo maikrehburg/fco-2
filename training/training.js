@@ -74,6 +74,16 @@ async function loadData() {
                     player.trainings = [];
                 }
             });
+
+            // Stelle sicher, dass jedes Training notes/photos hat (Kompatibilität)
+            trainings.forEach(training => {
+                if (typeof training.notes !== 'string') {
+                    training.notes = '';
+                }
+                if (!Array.isArray(training.photos)) {
+                    training.photos = [];
+                }
+            });
         } else if (response.status === 404) {
             appData = { players: [], trainings: [] };
             players = appData.players;
@@ -89,24 +99,31 @@ async function loadData() {
     renderTrainings();
 }
 
+// Stellt sicher, dass ein GitHub Token vorhanden ist (fragt ggf. per Prompt ab)
+function ensureGithubToken() {
+    if (githubToken) return true;
+
+    const token = prompt(
+        'Zum Speichern wird ein GitHub Personal Access Token benötigt:\n\n' +
+        '1. Gehe zu: https://github.com/settings/tokens\n' +
+        '2. Klicke "Generate new token (classic)"\n' +
+        '3. Wähle "repo" Berechtigung\n' +
+        '4. Kopiere das Token und füge es hier ein:'
+    );
+    if (token) {
+        githubToken = token;
+        localStorage.setItem('githubToken', token);
+        updateSettingsButton();
+        return true;
+    }
+    alert('Ohne Token können keine Änderungen gespeichert werden.');
+    return false;
+}
+
 // Daten in GitHub speichern
 async function saveData(commitMessage = null) {
-    if (!githubToken) {
-        const token = prompt(
-            'Zum Speichern wird ein GitHub Personal Access Token benötigt:\n\n' +
-            '1. Gehe zu: https://github.com/settings/tokens\n' +
-            '2. Klicke "Generate new token (classic)"\n' +
-            '3. Wähle "repo" Berechtigung\n' +
-            '4. Kopiere das Token und füge es hier ein:'
-        );
-        if (token) {
-            githubToken = token;
-            localStorage.setItem('githubToken', token);
-            updateSettingsButton();
-        } else {
-            alert('Ohne Token können keine Änderungen gespeichert werden.');
-            return;
-        }
+    if (!ensureGithubToken()) {
+        return;
     }
     
     try {
@@ -270,10 +287,12 @@ async function saveNewTraining() {
     
     const trainingId = Date.now();
     
-    // Training-Objekt erstellen (nur id und date)
+    // Training-Objekt erstellen
     const newTraining = {
         id: trainingId,
-        date: date
+        date: date,
+        notes: '',
+        photos: []
     };
     
     trainings.push(newTraining);
@@ -307,6 +326,9 @@ function openTrainingDetails(trainingId) {
     document.getElementById('detailsDate').textContent = formatTrainingDisplayDate(training.date);
     renderParticipants(training);
     renderAvailablePlayers(training);
+    renderTrainingNotes(training);
+    renderTrainingPhotos(training);
+    document.getElementById('trainingPhotoInput').value = '';
     document.getElementById('trainingDetailsOverlay').classList.add('active');
 }
 
@@ -441,6 +463,181 @@ async function deleteTraining() {
         
         closeDetailsOverlay();
         renderTrainings();
+    }
+}
+
+// Notizen im Textfeld anzeigen
+function renderTrainingNotes(training) {
+    document.getElementById('trainingNotes').value = training.notes || '';
+}
+
+// Notizen speichern
+async function saveTrainingNotes() {
+    const training = trainings.find(t => t.id === currentTrainingId);
+    if (!training) return;
+
+    training.notes = document.getElementById('trainingNotes').value;
+
+    const commitMessage = `Notizen aktualisiert: Training ${formatDate(training.date)}`;
+    await saveData(commitMessage);
+    alert('Notizen gespeichert.');
+}
+
+// Fotos als Galerie anzeigen
+function renderTrainingPhotos(training) {
+    const container = document.getElementById('trainingPhotosList');
+    const photos = training.photos || [];
+
+    if (photos.length === 0) {
+        container.innerHTML = '<p style="color: #999;">Noch keine Fotos.</p>';
+        return;
+    }
+
+    container.innerHTML = photos.map((photo, index) => `
+        <div class="photo-thumb" onclick="window.open('${photo.url}', '_blank')">
+            <img src="${photo.url}" alt="${photo.name || 'Foto'}">
+            <button class="remove-photo-btn"
+                    onclick="event.stopPropagation(); removeTrainingPhoto(${index})"
+                    title="Entfernen">×</button>
+        </div>
+    `).join('');
+}
+
+// Bild verkleinern/komprimieren, bevor es hochgeladen wird (GitHub Contents API Limit ~1MB)
+function compressImage(file, maxDimension = 1600, quality = 0.75) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const img = new Image();
+            img.onload = () => {
+                let { width, height } = img;
+                if (width > maxDimension || height > maxDimension) {
+                    const scale = maxDimension / Math.max(width, height);
+                    width = Math.round(width * scale);
+                    height = Math.round(height * scale);
+                }
+                const canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+                canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                const dataUrl = canvas.toDataURL('image/jpeg', quality);
+                resolve(dataUrl.split(',')[1]);
+            };
+            img.onerror = reject;
+            img.src = reader.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+// Einzelnes Foto zu GitHub hochladen, gibt die gespeicherte Foto-Referenz zurück
+async function uploadTrainingPhoto(file) {
+    const base64Content = await compressImage(file);
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const path = `training-photos/${currentTrainingId}/${Date.now()}-${safeName}.jpg`;
+    const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${path}`;
+
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `token ${githubToken}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            message: `Foto hinzugefügt zu Training ${currentTrainingId}`,
+            content: base64Content,
+            branch: GITHUB_CONFIG.branch
+        })
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(`GitHub API Fehler: ${error.message}`);
+    }
+
+    const data = await response.json();
+    return {
+        path: data.content.path,
+        sha: data.content.sha,
+        url: data.content.download_url,
+        name: file.name
+    };
+}
+
+// Foto aus dem Repo löschen
+async function deleteTrainingPhoto(photo) {
+    const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${photo.path}`;
+
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `token ${githubToken}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            message: `Foto gelöscht von Training ${currentTrainingId}`,
+            sha: photo.sha,
+            branch: GITHUB_CONFIG.branch
+        })
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(`GitHub API Fehler: ${error.message}`);
+    }
+}
+
+// Ausgewählte Fotos hochladen
+async function handlePhotoUpload(fileList) {
+    const training = trainings.find(t => t.id === currentTrainingId);
+    if (!training || fileList.length === 0) return;
+
+    if (!ensureGithubToken()) {
+        return;
+    }
+
+    const statusEl = document.getElementById('photoUploadStatus');
+    statusEl.style.display = 'block';
+
+    for (const file of Array.from(fileList)) {
+        try {
+            const photo = await uploadTrainingPhoto(file);
+            training.photos.push(photo);
+        } catch (error) {
+            console.error('Fehler beim Hochladen:', error);
+            alert(`Foto "${file.name}" konnte nicht hochgeladen werden: ${error.message}`);
+        }
+    }
+
+    statusEl.style.display = 'none';
+    document.getElementById('trainingPhotoInput').value = '';
+
+    await saveData(`Fotos hinzugefügt zu Training ${formatDate(training.date)}`);
+    renderTrainingPhotos(training);
+}
+
+// Foto entfernen
+async function removeTrainingPhoto(index) {
+    const training = trainings.find(t => t.id === currentTrainingId);
+    if (!training || !training.photos[index]) return;
+
+    if (!confirm('Möchtest du dieses Foto wirklich löschen?')) {
+        return;
+    }
+
+    const photo = training.photos[index];
+
+    try {
+        await deleteTrainingPhoto(photo);
+        training.photos.splice(index, 1);
+        await saveData(`Foto gelöscht von Training ${formatDate(training.date)}`);
+        renderTrainingPhotos(training);
+    } catch (error) {
+        console.error('Fehler beim Löschen:', error);
+        alert(`Foto konnte nicht gelöscht werden: ${error.message}`);
     }
 }
 

@@ -76,6 +76,19 @@
                     <!-- Verfügbare Spieler werden hier angezeigt -->
                 </div>
             </div>
+            <div class="form-group">
+                <label for="trainingNotes">Notizen:</label>
+                <textarea id="trainingNotes" rows="4" placeholder="Notizen zum Training..."></textarea>
+                <button type="button" class="btn btn-secondary notes-save-btn" onclick="saveTrainingNotes()">Notizen speichern</button>
+            </div>
+            <div class="form-group">
+                <label>Fotos:</label>
+                <div id="trainingPhotosList" class="photos-grid">
+                    <!-- Fotos werden hier angezeigt -->
+                </div>
+                <input type="file" id="trainingPhotoInput" accept="image/*" multiple onchange="handlePhotoUpload(this.files)">
+                <span id="photoUploadStatus" class="photo-upload-status" style="display: none;">Foto(s) werden hochgeladen...</span>
+            </div>
             <div class="form-buttons">
                 <button type="button" class="btn btn-secondary" onclick="closeDetailsOverlay()">Schließen</button>
                 <button type="button" class="btn btn-danger" onclick="deleteTraining()">Training löschen</button>
