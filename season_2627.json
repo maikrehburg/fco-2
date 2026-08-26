@@ -320,7 +320,12 @@
     {
       "id": 1778689941547,
       "name": "Lars B.",
-      "washDates": [],
+      "washDates": [
+        {
+          "date": "2026-08-23",
+          "opponent": "Isenstedt"
+        }
+      ],
       "trainings": [
         1784833099891
       ],
