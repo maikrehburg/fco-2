@@ -450,7 +450,14 @@
       "id": 1789661511235,
       "date": "2026-09-17",
       "notes": "",
-      "photos": []
+      "photos": [
+        {
+          "path": "training-photos/1789661511235/1789661525487-image.jpg.jpg",
+          "sha": "c88a55b0dde2a839def8cc76f389dcece2ad5ca9",
+          "url": "https://raw.githubusercontent.com/maikrehburg/fco-2/main/training-photos/1789661511235/1789661525487-image.jpg.jpg",
+          "name": "image.jpg"
+        }
+      ]
     }
   ]
 }
