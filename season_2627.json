@@ -427,7 +427,9 @@
       "id": 1791902405402,
       "name": "Emrah G.",
       "washDates": [],
-      "trainings": [],
+      "trainings": [
+        1791891313189
+      ],
       "absences": []
     }
   ],
