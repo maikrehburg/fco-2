@@ -532,7 +532,14 @@
       "id": 1791891313189,
       "date": "2026-10-13",
       "notes": "- Türken\n- Herbstputz Sportplatz ",
-      "photos": []
+      "photos": [
+        {
+          "path": "training-photos/1791891313189/1791891364313-image.jpg.jpg",
+          "sha": "2db98bdf52cfbb9e2e525384630aeec31e314b54",
+          "url": "https://raw.githubusercontent.com/maikrehburg/fco-2/main/training-photos/1791891313189/1791891364313-image.jpg.jpg",
+          "name": "image.jpg"
+        }
+      ]
     }
   ]
 }
