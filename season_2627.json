@@ -236,7 +236,8 @@
         1789661511235,
         1790084920466,
         1791891313189,
-        1792078606747
+        1792078606747,
+        1792078607597
       ],
       "absences": []
     },
@@ -554,6 +555,19 @@
     },
     {
       "id": 1792078606747,
+      "date": "2026-10-15",
+      "notes": "",
+      "photos": [
+        {
+          "path": "training-photos/1792078606747/1792078630048-image.jpg.jpg",
+          "sha": "3312fef156f5e25594c90456e74f559c4535209c",
+          "url": "https://raw.githubusercontent.com/maikrehburg/fco-2/main/training-photos/1792078606747/1792078630048-image.jpg.jpg",
+          "name": "image.jpg"
+        }
+      ]
+    },
+    {
+      "id": 1792078607597,
       "date": "2026-10-15",
       "notes": "",
       "photos": []
