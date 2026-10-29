@@ -463,7 +463,9 @@
       "id": 1793296702547,
       "name": "Simon B.",
       "washDates": [],
-      "trainings": [],
+      "trainings": [
+        1793296636346
+      ],
       "absences": []
     }
   ],
